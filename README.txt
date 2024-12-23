@@ -1,5 +1,6 @@
 Hola, you have entered the CUM Zone.
-Last Updated: 11/21/2024
+Last Updated: 12/22/2024
+I've Finally Figured this git stuff out I think, WSL is hard but cool.
 Refference for me to get a fast WSL start:
 cd /mnt/c/Users/Lucas/Desktop/MathBuffDB
 
