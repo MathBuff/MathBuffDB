@@ -1,4 +1,4 @@
-Hola, you have entered the CUM Zone.
+Hola, you have entered the CUMeded Zone.
 Last Updated: 12/22/2024
 I've Finally Figured this git stuff out I think, WSL is hard but cool.
 Refference for me to get a fast WSL start:
