@@ -1,11 +1,4 @@
-Hola, you have entered the CUMeded Zone.
-Last Updated: 1/25/2025
-I've Finally Figured this git stuff out I think, WSL is hard but cool.
-Refference for me to get a fast WSL start:
-cd /mnt
-cd /c
-cd /Users/Lucas/documents/AProjects/Prog/MathBuffDB
-
+Last Updated: 1/26/2025
 
 =====PROGRAM FILE STRUCTURE=====
 
@@ -29,3 +22,16 @@ This is where I'll be organizing the Program stuff.
 This is a .sh file that contains a bash script that I use the windows subsystem
 for linux with in order to more readily test the program using the command line 
 via the clang compiler.
+
+/save
+This is a file that I spent 2 hours figureing out that the line ending encoding for 
+windows and unix somehow differ for whatever reason.
+It caused problems until I figured I change a few settings in notepads and create a 
+new file from within notepads.
+I was able to get the unix line ending down, which is compatable with bash.
+
+====MISC====
+Refference for me to get a fast WSL start:
+cd /mnt
+cd /c
+cd /Users/Lucas/documents/AProjects/Prog/MathBuffDB
