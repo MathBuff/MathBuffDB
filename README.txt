@@ -1,8 +1,10 @@
 Hola, you have entered the CUMeded Zone.
-Last Updated: 12/22/2024
+Last Updated: 1/25/2025
 I've Finally Figured this git stuff out I think, WSL is hard but cool.
 Refference for me to get a fast WSL start:
-cd /mnt/c/Users/Lucas/Desktop/MathBuffDB
+cd /mnt
+cd /c
+cd /Users/Lucas/documents/AProjects/Prog/MathBuffDB
 
 
 =====PROGRAM FILE STRUCTURE=====
