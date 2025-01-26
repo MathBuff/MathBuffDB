@@ -1,10 +1,15 @@
 #include<iostream>
-#include "File.h"
+#include<iomanip>
+#include "Test.h"
+
+template<typename T>
+constexpr T pi = T{3.14159265};
+
+
 int main(){
 	std::cout<<"\n==Start==\n";
 	
-	File file1("Homework", "8====D");
-	file1.filePrint();
+	std::cout<< std::setprecision(20)<<pi<long double>;
 	
 	std::cout<<"\n--End--\n\n";
 	return 0;
