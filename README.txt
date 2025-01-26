@@ -28,12 +28,12 @@ Is currently empty cause I have no precompiled libraries to work with at the mom
 Oh hi, looks like you made it.
 This is where I'll be organizing the Program stuff.
 
-/run
+/run [This is a Bash Script]
 This is a .sh file that contains a bash script that I use the windows subsystem
 for linux with in order to more readily test the program using the command line 
 via the clang compiler.
 
-/save
+/save [This is a Bash Script]
 This is a file that I spent 2 hours figuring out that the line ending encoding for 
 windows and unix somehow differ for whatever reason.
 It caused problems until I figured I change a few settings in notepads and create a 
