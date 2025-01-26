@@ -12,7 +12,7 @@ git add .
 # If the commit fails because nothing changed, the script stops
 
 if git diff-index --quiet HEAD --; then
-    echo "No changes to commit"
+    echo "No changes to commited\n"
 else
     # Commit files to the local "main" branch
     git commit -m "quickSave"
