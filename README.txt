@@ -24,11 +24,11 @@ for linux with in order to more readily test the program using the command line
 via the clang compiler.
 
 /save
-This is a file that I spent 2 hours figureing out that the line ending encoding for 
+This is a file that I spent 2 hours figuring out that the line ending encoding for 
 windows and unix somehow differ for whatever reason.
 It caused problems until I figured I change a few settings in notepads and create a 
 new file from within notepads.
-I was able to get the unix line ending down, which is compatable with bash.
+I was able to get the unix line ending down, which is compatible with bash.
 
 ====MISC====
 Refference for me to get a fast WSL start:
