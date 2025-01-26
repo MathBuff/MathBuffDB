@@ -1,4 +1,14 @@
 Last Updated: 1/26/2025
+====PROGRAM BUILD====
+Everything was navigated and tested with WSL ubuntu.
+Scripts are in bash.
+The bash scripts thusfar are used for development.
+To make "buttons" that most IDE's have.
+
+Program is in C++.
+I used clang as the C++ compiler.
+I use git on the console, and push to a remote repository called MathBuffsDB 
+on github.
 
 =====PROGRAM FILE STRUCTURE=====
 
