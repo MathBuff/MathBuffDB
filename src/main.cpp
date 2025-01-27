@@ -1,16 +1,11 @@
-#include<iostream>
-#include<iomanip>
-#include "Test.h"
+#include <iostream>
 
-template<typename T>
-constexpr T pi = T{3.14159265};
-
+template <class T>
+constexpr T speed_of_light = T(299'792'458);
 
 int main(){
-	std::cout<<"\n==Start==\n";
-	
-	std::cout<< std::setprecision(20)<<pi<long double>;
-	
-	std::cout<<"\n--End--\n\n";
-	return 0;
+std::cout << speed_of_light <double> << '\n';
+std::cout << speed_of_light <float> << '\n';
+std::cout << speed_of_light <int> << '\n';
+std::cout << speed_of_light <long> << '\n';
 }

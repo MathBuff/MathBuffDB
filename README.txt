@@ -1,5 +1,5 @@
 Last Updated: 1/26/2025
-====PROGRAM BUILD====
+____====PROGRAM BUILD====______________________________________________________________
 Everything was navigated and tested with WSL ubuntu.
 Scripts are in bash.
 The bash scripts thusfar are used for development.
@@ -10,8 +10,17 @@ I used clang as the C++ compiler.
 I use git on the console, and push to a remote repository called MathBuffsDB 
 on github.
 
-=====Main Directory Files=====
+____=====Main Directory Files=====_____________________________________________________
+____****GIT****________________________________________________________________________
+/desktop.ini
+This is a git preferences folder that popped up when I was messing 
+with the settings that one time.
 
+/.git 
+This is the git folder, it allows me to save and track stages to a repository.
+Github included.
+
+____****MathBuffDB-Source****__________________________________________________________
 /src
 contains all the cpp files and main, aka the source files.
 
@@ -24,6 +33,7 @@ Contains the executable a.out for the program once compiled.
 /lib
 Is currently empty cause I have no precompiled libraries to work with at the moment.
 
+____**** Scripts & Organization ****_____________________________________________________
 /README
 Oh hi, looks like you made it.
 This is where I'll be organizing the Program stuff.
@@ -40,13 +50,12 @@ It caused problems until I figured I change a few settings in notepads and creat
 new file from within notepads.
 I was able to get the unix line ending down, which is compatible with bash.
 
-==== Main Source & Header ====
+____==== Main Source & Header Composition ====___________________________________________
 
 /Test.h & Test.cpp
 This is just a experimental setup section That I'm saving for learning purposes. 
 
-
-====MISC====
+____====MISC====_________________________________________________________________________
 Refference for me to get a fast WSL start:
 cd /mnt
 cd /c
