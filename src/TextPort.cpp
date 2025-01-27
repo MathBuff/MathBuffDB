@@ -30,6 +30,21 @@ void TextPort::setFileToWrite(){
 	
 }
 
+//Used by Writing Tools to ensure no reopening of files which Wipes
+//Data from file being written to.
+
+void TextPort::continueWritingState(){
+	if(getFileState()=="write"){
+			return;
+	}
+	else{
+		changeFileState("write");
+		return;
+	}
+		
+	
+}
+
 //PUBLIC============================================================
 
 //Constructor 
@@ -55,11 +70,17 @@ void TextPort::changeFileState(std::string state){
 	std::string TextPort::getFileState(){
 		return this->fileState;
 	}
+//Writing Tools
 
 void TextPort::coutToCurrentRow(std::string input){
-		changeFileState("write");
-		genericFileVariableName<< input;
+	continueWritingState();
+	genericFileVariableName<<input;	
 }
+
+/*I need to implement appending
+It apparently will allow you to write to the file 
+without wiping the file entirely.
+*/
 
 //Data Printers
 

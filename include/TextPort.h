@@ -21,6 +21,8 @@ class TextPort{
 			void setFileToRead();
 		
 			void setFileToWrite();
+			
+			void continueWritingState();
 	
 	public:
 		//Constructor
@@ -35,6 +37,7 @@ class TextPort{
 
 		//Writing Tools
 		void coutToCurrentRow(std::string input);
+			//Will Wipe File if writing to it for the first Time
 			
 		//File Printers
 			void printFileLinkStatus();
