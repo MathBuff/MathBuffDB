@@ -51,9 +51,15 @@ new file from within notepads.
 I was able to get the unix line ending down, which is compatible with bash.
 
 ____==== Main Source & Header Composition ====___________________________________________
+#Check .h and .cpp, these /files are an abstraction.
 
-/Test.h & Test.cpp
+/Test
 This is just a experimental setup section That I'm saving for learning purposes. 
+
+/TextPort
+This is a text File interface being developed for C++.
+Plan is to make using and reading text files a piece of cake and as straight forward
+as possible.
 
 ____====MISC====_________________________________________________________________________
 Refference for me to get a fast WSL start:
