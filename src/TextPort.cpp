@@ -1,4 +1,5 @@
 #include "TextPort.h"
+#include "algorithm"
 
 //PRIVATE==========================================================
 
@@ -9,7 +10,7 @@ void TextPort::setFileToRead(){
 		
 		if(genericFileVariableName.is_open()){
 			this->fileState = "read";
-			printFileLinkStatus();
+			getFileLinkStatus();
 		}
 		else
 			std::cout<<std::endl<<"File Failed to link with setFileread()";
@@ -22,35 +23,50 @@ void TextPort::setFileToWrite(){
 		
 		if(genericFileVariableName.is_open()){
 			this->fileState = "write";
-			printFileLinkStatus();
+			getFileLinkStatus();
 			
 		}
 		else
-			std::cout<<std::endl<<"File Failed to link with setFileread()";
-	
+			std::cout<<std::endl<<"File Failed to link with setFileread()";	
 }
 
-//Used by Writing Tools to ensure no reopening of files which Wipes
-//Data from file being written to.
+/*Used by Text Tools to ensure no reopening of files which Wipes
+Data from file being written to.*/
 
-void TextPort::continueWritingState(){
+void TextPort::writeStateSignal(){ //UPDATE//
 	if(getFileState()=="write"){
-			return;
+		return;
 	}
 	else{
 		changeFileState("write");
 		return;
 	}
-		
 	
+}
+
+void TextPort::readStateSignal(){ //UPDATE//
+	if(getFileState()=="read"){
+		return;
+	}
+	else{
+		changeFileState("read");
+		return;
+	}
+	
+}
+
+//UTILITY
+std::string TextPort::removeCarriageReturns(const std::string& input) {
+    std::string result = input;
+    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+    return result;
 }
 
 //PUBLIC============================================================
 
 //Constructor 
-TextPort::TextPort(std::string filePathInput, std::string fileState)
-	:filePath(filePathInput),fileState(fileState){
-			changeFileState(fileState);
+TextPort::TextPort(std::string filePathInput)
+	:filePath(filePathInput),fileState("NULL"){
 	}
 
 //Text File IO Changer
@@ -72,8 +88,8 @@ void TextPort::changeFileState(std::string state){
 	}
 //Writing Tools
 
-void TextPort::coutToCurrentRow(std::string input){
-	continueWritingState();
+void TextPort::writeCout(std::string input){
+	writeStateSignal();
 	genericFileVariableName<<input;	
 }
 
@@ -82,26 +98,46 @@ It apparently will allow you to write to the file
 without wiping the file entirely.
 */
 
-//Data Printers
+//Data Readers
 
-void TextPort::printFileLinkStatus(){
-	std::cout<<std::endl<<"Linked to file: [";
-	std::cout<< getFilePath()+"] for "+ getFileState();
+std::string TextPort::getFileLinkStatus(){ 
+	return "Linked to file: ["+getFilePath()+"] for "+getFileState();
 }
 
 
-void TextPort:: printCurrentRow(){
+std::string TextPort:: readLine(){ 
 	std::string data;
-	getline(genericFileVariableName,data);
-	std::cout<<std::endl<<data;
-}
-
-void TextPort:: cinCurrentRow(){
-	std::string data;
+	
 	if(genericFileVariableName.is_open()){
-		genericFileVariableName>>data;
-		std::cout<<std::endl<<data;
+	getline(genericFileVariableName,data);
+	return removeCarriageReturns(data);
 	}
 	else
-	std::cout<<std::endl<<"Failed to read Data with cinCurrentRow()";
+	std::cout<<std::endl<<"Failed to read Data with readLine(), File not Open";
+	return "NoData";
 }
+
+std::string  TextPort:: readCin(){ 
+
+	std::string data;
+	
+	if(genericFileVariableName.is_open()){
+		genericFileVariableName>>data;
+		return data;
+	}
+	else
+	std::cout<<std::endl<<"Failed to read Data with readCin(), File not Open";
+	return "NoData";
+}
+//Reads first non whitespace input, but Stops at following whitespace ( space, tab, or newline.)
+
+void TextPort::noEscapeCharASCIIDataLinePrint(){
+	
+	std::cout<<"Dumping line Data with no escape charaters"<<std::endl;
+	std::string line = readLine();
+	for (char c : line) {
+    std::cout << "[" << c << "] -> ASCII: " << static_cast<int>(c) << std::endl;
+}
+	std::cout << std::endl;
+}
+

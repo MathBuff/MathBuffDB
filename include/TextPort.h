@@ -22,11 +22,21 @@ class TextPort{
 		
 			void setFileToWrite();
 			
-			void continueWritingState();
+		//State Signalers
+			void writeStateSignal();
+			
+			void readStateSignal();
+			
+		//Utility
+			std::string removeCarriageReturns(const std::string& input);
+				/*This is used for the readLine function to allow it to
+				Get rid of carridge returns and causing cout to mess up.
+				After reading on it, it doesn't seem to need to exist.
+				*/
 	
 	public:
 		//Constructor
-			TextPort(std::string filePathInput, std::string fileState);
+			TextPort(std::string filePathInput);
 		
 		//Text File IO Changer
 			void changeFileState(std::string state); 
@@ -36,15 +46,18 @@ class TextPort{
 			std::string getFileState();
 
 		//Writing Tools
-		void coutToCurrentRow(std::string input);
+		void writeCout(std::string input);
 			//Will Wipe File if writing to it for the first Time
 			
 		//File Printers
-			void printFileLinkStatus();
+			std::string getFileLinkStatus(); 
 		
-			void printCurrentRow();
+			std::string readLine();
 		
-			void cinCurrentRow();
+			std::string readCin(); 
+			
+		//DataDump
+			void noEscapeCharASCIIDataLinePrint();
 	
 };
 
