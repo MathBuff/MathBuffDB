@@ -63,7 +63,14 @@ class TextPort{
 #endif // Header guard end
 
 /*TODO
+Still Working on GetLine function and improving it to be sensitive
+to the read cursor.
+
+
+Ideas:
 Figure Out what appending is
 Figure out what seeking is
 GOAL:
 Make it so you can read & write to a specific Line in the .txt File
+
+*/

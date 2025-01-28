@@ -94,7 +94,7 @@ std::string TextPort:: readLine(){
 	
 	if(genericFileVariableName.is_open()){
 	getline(genericFileVariableName,data);
-	getFileLinkStatus();
+	//getFileLinkStatus();
 
 	return removeCarriageReturns(data);
 	}
