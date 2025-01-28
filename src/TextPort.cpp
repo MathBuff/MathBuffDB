@@ -3,7 +3,37 @@
 
 //PRIVATE==========================================================
 
-//State Changers
+//I
+void TextPort::changeFileState(std::string state){
+	if(state=="read"){
+		if(this->fileState =="read"){
+			//Do nothing
+			return;
+		}
+		else{
+			genericFileVariableName.close();
+			setFileToRead();
+			return;
+		}
+		
+	}
+	else if(state=="write"){
+		if(this->fileState =="write"){
+			//Do nothing
+			return;
+		}
+		else{
+			genericFileVariableName.close();
+			setFileToWrite();
+			return;
+		}
+	}
+	else{
+		std::cout<<"changeFileState() was called but did nothing"<<std::endl;
+	}
+}
+
+//II
 void TextPort::setFileToRead(){
 	
 		genericFileVariableName.open(filePath, std::ios::in);
@@ -30,86 +60,42 @@ void TextPort::setFileToWrite(){
 			std::cout<<std::endl<<"File Failed to link with setFileread()";	
 }
 
-/*Used by Text Tools to ensure no reopening of files which Wipes
-Data from file being written to.*/
 
-void TextPort::writeStateSignal(){ //UPDATE//
-	if(getFileState()=="write"){
-		return;
-	}
-	else{
-		changeFileState("write");
-		return;
-	}
-	
-}
-
-void TextPort::readStateSignal(){ //UPDATE//
-	if(getFileState()=="read"){
-		return;
-	}
-	else{
-		changeFileState("read");
-		return;
-	}
-	
-}
-
-//UTILITY
-std::string TextPort::removeCarriageReturns(const std::string& input) {
-    std::string result = input;
-    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
-    return result;
-}
 
 //PUBLIC============================================================
 
-//Constructor 
+//1 
 TextPort::TextPort(std::string filePathInput)
-	:filePath(filePathInput),fileState("NULL"){
+	:filePath(filePathInput),fileState("read"){
 	}
 
-//Text File IO Changer
-void TextPort::changeFileState(std::string state){
-	if(state=="read"){
-		setFileToRead();
-	}
-	else if(state=="write"){
-		setFileToWrite();
-	}
-}
 
-//Getters For private Members
+
+//2
 	std::string TextPort::getFilePath(){
 		return this->filePath;
 	}
 	std::string TextPort::getFileState(){
 		return this->fileState;
 	}
-//Writing Tools
+//3
 
 void TextPort::writeCout(std::string input){
-	writeStateSignal();
+	changeFileState("write");
 	genericFileVariableName<<input;	
 }
 
-/*I need to implement appending
-It apparently will allow you to write to the file 
-without wiping the file entirely.
-*/
-
-//Data Readers
-
-std::string TextPort::getFileLinkStatus(){ 
-	return "Linked to file: ["+getFilePath()+"] for "+getFileState();
-}
-
+//4
 
 std::string TextPort:: readLine(){ 
+	
 	std::string data;
+	changeFileState("read");
 	
 	if(genericFileVariableName.is_open()){
 	getline(genericFileVariableName,data);
+	getFileLinkStatus();
+
 	return removeCarriageReturns(data);
 	}
 	else
@@ -118,9 +104,8 @@ std::string TextPort:: readLine(){
 }
 
 std::string  TextPort:: readCin(){ 
-
 	std::string data;
-	
+	changeFileState("read");
 	if(genericFileVariableName.is_open()){
 		genericFileVariableName>>data;
 		return data;
@@ -129,7 +114,15 @@ std::string  TextPort:: readCin(){
 	std::cout<<std::endl<<"Failed to read Data with readCin(), File not Open";
 	return "NoData";
 }
-//Reads first non whitespace input, but Stops at following whitespace ( space, tab, or newline.)
+	//Reads first non whitespace input, but Stops at following whitespace ( space, tab, or newline.)
+
+//5
+
+std::string TextPort::getFileLinkStatus(){ 
+	return "Linked to file: ["+getFilePath()+"] for "+getFileState();
+}
+
+//6
 
 void TextPort::noEscapeCharASCIIDataLinePrint(){
 	
@@ -139,5 +132,11 @@ void TextPort::noEscapeCharASCIIDataLinePrint(){
     std::cout << "[" << c << "] -> ASCII: " << static_cast<int>(c) << std::endl;
 }
 	std::cout << std::endl;
+}
+
+std::string TextPort::removeCarriageReturns(const std::string& input) {
+    std::string result = input;
+    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+    return result;
 }
 
