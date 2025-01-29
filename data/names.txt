@@ -2,3 +2,5 @@ Jebediah	Kerman	Stunt Pilot extraordinaire	0001	50
 Bill	Kerman	Ducktape Engineer	0002	15
 Bob	Kerman	Moderatly Terrified Scienctist	0003	80
 Valentina	Kerman	Designated Woman	0004	66
+Joes Smoes froes Goes
+SmellyToes

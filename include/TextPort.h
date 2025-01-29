@@ -52,7 +52,7 @@ class TextPort{
 				
 			void appendCout(std::string input);
 				/*Will non destructively access file.
-				Writes to the bottem of the file like cout.*/
+				Writes right of the bottem line's text*/
 			
 		//4
 			std::string readCurLineRem();
@@ -87,7 +87,7 @@ class TextPort{
 /*TODO
 Find way to control cursor
 
-
+implement a 
 
 Ideas:
 Figure out what seeking is

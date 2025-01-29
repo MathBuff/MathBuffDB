@@ -3,7 +3,9 @@
 
 int main () {
 	TextPort KerbalTable("data/names.txt");
-
+	
+	KerbalTable.appendCout("\nSmelly");
+	KerbalTable.appendCout("Toes");
 	KerbalTable.printFileToLineNum(25);
 	
 	
