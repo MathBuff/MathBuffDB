@@ -52,7 +52,8 @@ class TextPort{
 				
 			void appendCout(std::string input);
 				/*Will non destructively access file.
-				Writes right of the bottem line's text*/
+				Writes right of the bottem line's text
+				To be clear, it does not add a new line unless given a \n char*/
 			
 		//4
 			std::string readCurLineRem();
