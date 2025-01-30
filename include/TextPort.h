@@ -22,6 +22,15 @@ class TextPort{
 				out: The wipe and write state
 				app: The append state
 				*/
+				
+			int totalLineCount;
+				//Last total Line count for file
+			
+			
+			bool fileEdited;
+				//True: The text file had been edited by the program internally
+				//False: The text file had not been internally edited by the program.
+				
 		
 		//I
 			void changeFileState(std::string state);
@@ -32,6 +41,11 @@ class TextPort{
 			void setFileToOut();
 			
 			void setFileToApp();
+
+			void setFileToNULL();
+			
+		//II
+			void markFileEdit();
 			
 	
 	public:
@@ -42,6 +56,8 @@ class TextPort{
 			std::string getFilePath();
 
 			std::string getFileState();
+			
+			bool getFileEditedStatus();
 
 		//3
 			void supConCout(std::string input);
@@ -64,22 +80,34 @@ class TextPort{
 				Does not read new line "\n" chars at the end of a line into return*/
 		
 			std::string readCurCin();
-				/*Will return string of non whitespace chars right of the cursor, 
-				stops at next whitespace char*/
+				/*"Read Current Line via cin like method"
+				Reads first non whitespace input, 
+				but Stops at following whitespace ( space, tab, or newline.)*/
+				
 			
 		//5
 			void printFileLinkStatus(); 
 			
 			void printFileToLineNum(int input);
 			
-		//6
+			void printEntireFile();
+			
+			void noEscapeCharASCIIDataLinePrint();
+				/*Reads right of the cursor of remaing part of line.
+				Prints ascii character values of each character on line*/
+			
+		//6	
 			std::string removeCarriageReturns(const std::string& input);
 				/*This is used for the readCurLine function to allow it to
 				Get rid of carridge returns "\r", preventing return form 
 				causing cout to no produce expected output.
 				*/
 			
-			void noEscapeCharASCIIDataLinePrint();
+		//7
+			int checkTotalLineCount();
+				/*Reads entire file once and counts up each line. 
+				Then sets totalLineCount Var to new count.
+				Can also be used to return the new count directly.*/
 	
 };
 
