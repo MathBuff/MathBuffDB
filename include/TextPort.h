@@ -46,6 +46,9 @@ class TextPort{
 			
 		//II
 			void markFileEdit();
+				/*Used in functions that make changes to the text file in any way.
+				This way the program has a way to know if reading everyting to check
+				Line count or whatever is neccesary.*/
 			
 	
 	public:
@@ -105,21 +108,30 @@ class TextPort{
 			
 		//7
 			int checkTotalLineCount();
-				/*Reads entire file once and counts up each line. 
+				/*If file edited is true.
+				This function Reads entire file once and counts up each line. 
 				Then sets totalLineCount Var to new count.
-				Can also be used to return the new count directly.*/
+				Can also be used to return the new count directly.
+				If file edited is false, it will only return the existing 
+				totalLineCount */
 	
 };
 
 #endif // Header guard end
 
 /*TODO
-Find way to control cursor
+Try making a function that prints from line # to line #.
 
-implement a 
+We need a specific solution for moving to a specific line, and then
+either reading or writing(non-destructively).
 
 Ideas:
-Figure out what seeking is
+Figure out what seeking is.
+Don't bother making this first try computationally efficient much, outside
+of the complete obvious.
+See if I can avoid having to do datastructure work as long as possible.
+So that way upgrades are more intuitive.
+
 GOAL:
 Make it so you can read & write to a specific Line in the .txt File
 

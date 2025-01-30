@@ -224,6 +224,10 @@ std::string TextPort::removeCarriageReturns(const std::string& input) {
 //7
 int TextPort::checkTotalLineCount(){
 	
+	if(this->fileEdited){
+	/*Condition checks if any changes occured.
+	This way it knows if its neccesary to count everything again*/
+	
 	int i=0;
 	//Reseting File so that the cursor starts at the top with read line.
 	//This function uses readCurLineRem
@@ -237,5 +241,9 @@ int TextPort::checkTotalLineCount(){
 		this-> totalLineCount = i;
 		
 		return i;
+	}
+	else{
+		return this->totalLineCount;
+	}
 }
 
