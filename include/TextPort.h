@@ -31,33 +31,34 @@ class TextPort{
 				//True: The text file had been edited by the program internally
 				//False: The text file had not been internally edited by the program.
 				
-		
-		//I
-			void changeFileState(std::string state);
+		//PRIVATE FUNCTIONS: 
+			//Class Users can ignore these functions, internal object use only.
+			//I
+				void changeFileState(std::string state);
+				
+			//II
+				void setFileToIn();
 			
-		//II
-			void setFileToIn();
-		
-			void setFileToOut();
-			
-			void setFileToApp();
+				void setFileToOut();
+				
+				void setFileToApp();
 
-			void setFileToNULL();
-			
-		//III
-			void markFileEdit();
-				/*Used in functions that make changes to the text file in any way.
-				This way the program has a way to know if reading everyting to check
-				Line count or whatever is neccesary.*/
-		//IV
-			void throwFileLinkError();
-				/*A function to cause entire program to end and make main return 1*/
+				void setFileToNULL();
+				
+			//III
+				void markFileEdit();
+					/*Used in functions that make changes to the text file in any way.
+					This way the program has a way to know if reading everyting to check
+					Line count or whatever is neccesary.*/
+			//IV
+				void throwFileLinkError();
+					/*A function to cause entire program to end and make main return 1*/
 	
 	public:
-		//1
+		//1 (Constructor)
 			TextPort(std::string filePathInput);
 		
-		//2
+		//2 (Getters)
 			std::string getFilePath();
 
 			std::string getFileState();
@@ -65,7 +66,7 @@ class TextPort{
 			bool getFileEditedStatus();
 			
 
-		//3
+		//3 (File writing Functions)
 			void supConCout(std::string input);
 				/* "Supplant And Continue Cout": 
 				Wipes file clean before writing.
@@ -74,10 +75,11 @@ class TextPort{
 				
 			void appendCout(std::string input);
 				/*Will non destructively access file.
-				Writes right of the bottem line's text
-				To be clear, it does not add a new line unless given a \n char*/
+				By default, it Writes right of the bottem line's text.
+				To be clear, it does not add a new line unless given a \n char.
+				Can be used in combination with cursor movements to overwrite data.*/
 			
-		//4
+		//4 (File reading Functions)
 			std::string readCurLineRem();
 				/*"Read Cursor Line remainder"
 				Returns string of the remaining part of a line from cursor.
@@ -90,8 +92,38 @@ class TextPort{
 				Reads first non whitespace input, 
 				but Stops at following whitespace ( space, tab, or newline.)*/
 				
+		//5 (OS Cursor Control)
+			void cursorToLineStart(int lineNumber);
 			
-		//5
+			void cursorToCurLineEnd();
+			
+			void cursorToCurLineStart();
+			
+			int cursorCurrentLine();
+			
+			int cursorCurrentLinePositionCharUTF_8();
+			
+			void cursorMoveForward(int CharsUTF_8);
+			
+			void cursorMoveBackward(int CharsUTF_8);
+			
+			
+			
+		//6 (Writing Methods)
+			/*These Methods are OS heavy.
+			It is important to consider using a datastructure within the program to
+			make manipulations to the text file after reading rather than running around a 
+			bunch with the cursor which will ultimately lead to more operations than neccesary.*/
+			
+			void wipeLine(int lineNumber);
+			
+			void removeLine(int lineNumber);
+			
+			void insertNewLineBelow(int lineNumber);
+			
+			std::string getLineRow(int lineNumber);
+			
+		//7 (Console Printing Functions)
 			void printFileLinkStatus(); 
 			
 			void printFileToLineNum(int input);
@@ -105,21 +137,22 @@ class TextPort{
 				/*Reads right of the cursor of remaing part of line.
 				Prints ascii character values of each character on line*/
 			
-		//6	
-			std::string removeCarriageReturns(const std::string& input);
-				/*This is used for the readCurLine function to allow it to
-				Get rid of carridge returns "\r", preventing return form 
-				causing cout to no produce expected output.
-				*/
-			
-		//7
+		
+		//8 (File Analysis)
 			int checkTotalLineCount();
 				/*If file edited is true.
 				This function Reads entire file once and counts up each line. 
 				Then sets totalLineCount Var to new count.
 				Can also be used to return the new count directly.
 				If file edited is false, it will only return the existing 
-				totalLineCount */
+				totalLineCount */	
+				
+		//9 (Utility)
+			std::string removeCarriageReturns(const std::string& input);
+				/*This is used for the readCurLine function to allow it to
+				Get rid of carridge returns "\r", preventing return form 
+				causing cout to no produce expected output.
+				*/
 	
 };
 

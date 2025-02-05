@@ -4,7 +4,10 @@
 #include <filesystem>
 
 //PRIVATE==========================================================
+//PRIVATE VARIABLES
+	//No need for them to be listed here, check .h file for info.
 
+//PRIVATE FUNCTIONS
 //I
 void TextPort::changeFileState(std::string state){
 	if(state=="in"){
@@ -117,14 +120,14 @@ void TextPort::throwFileLinkError(){
 
 //PUBLIC============================================================
 
-//1 
+//1 (Constructor)
 TextPort::TextPort(std::string filePathInput)
 	:filePath(filePathInput),fileState("NULL"),totalLineCount(-1),fileEdited(0){
 }
 
 
 
-//2
+//2 (Getters)
 	std::string TextPort::getFilePath(){
 		return this->filePath;
 	}
@@ -135,7 +138,7 @@ TextPort::TextPort(std::string filePathInput)
 		return this->fileEdited;
 	}
 	
-//3
+//3 (File writing Functions)
 
 void TextPort::supConCout(std::string input){ 
 	
@@ -145,13 +148,12 @@ void TextPort::supConCout(std::string input){
 }
 
 void TextPort::appendCout(std::string input){
-	
 	changeFileState("app");
 	genericFileVariableName<<input;
 	markFileEdit();
 }
 
-//4
+//4 (File reading Functions)
 
 std::string TextPort::readCurLineRem(){ 
 	std::string data;
@@ -180,9 +182,57 @@ std::string  TextPort:: readCurCin(){
 	std::cout<<std::endl<<"Failed to read Data with readCin(), File not Open";
 	return "NoData";
 }
+
+//5 (OS Cursor Control)
+	void cursorToLineStart(int lineNumber){
+		return;
+	}
+	
+	void cursorToCurLineEnd(){
+		return;
+	}
+	
+	void cursorToCurLineStart(){
+		return;
+	}
+	
+	int cursorCurrentLine(){
+		return 0
+	}
+	
+	int cursorCurrentLinePositionCharUTF_8(){
+		return 0;
+	}
+	
+	void cursorMoveForward(int CharsUTF_8){
+		return;
+	}
+	
+	void cursorMoveBackward(int CharsUTF_8){
+		return;
+	}
+	
+//6 (Writing Methods)
+	
+	void wipeLine(int lineNumber){
+		return;
+	}
+	
+	void removeLine(int lineNumber){
+		return;
+	}
+	
+	void insertNewLineBelow(int lineNumber){
+		return;
+	}
+	
+	std::string getLineRow(int lineNumber){
+		return "No Integration";
+	}
+
 	
 
-//5
+//7 (Console Printing Functions)
 
 void TextPort::printFileLinkStatus(){ 
 	std::cout<< "Linked to file: ["+getFilePath()+"] for "+getFileState()<<std::endl;
@@ -236,18 +286,7 @@ void TextPort::noEscapeCharASCIIDataLinePrint(){
 	std::cout << std::endl;
 }
 
-
-//6
-
-
-
-std::string TextPort::removeCarriageReturns(const std::string& input) {
-    std::string result = input;
-    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
-    return result;
-}
-
-//7
+//8 (File Analysis)
 int TextPort::checkTotalLineCount(){
 	
 	if(this->fileEdited){
@@ -271,5 +310,12 @@ int TextPort::checkTotalLineCount(){
 	else{
 		return this->totalLineCount;
 	}
+}
+
+//9 (Utility)
+std::string TextPort::removeCarriageReturns(const std::string& input) {
+    std::string result = input;
+    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+    return result;
 }
 
