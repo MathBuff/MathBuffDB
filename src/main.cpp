@@ -5,17 +5,25 @@
 #include "TextLoad.h"
 
 int main () {
-	TextPort File ("data/names.txt");
-	
-	std::cout<<File.checkTotalLineCount()<<std::endl;
 	
 	TextLoad manip;
-	
-	manip.loadMemory("data/names.txt");
-	
-	std::cout<<manip.getMemoryLineCount()<<std::endl;
+	manip.loadMemory("data/input.txt");
+	std::string A;
+	int B;
 	
 	manip.printMemory();
+
+	std::cout<<"Line to Append"<<std::endl;
+	std::cin>>B;
+	std::cin.ignore();
+	std::cout<<"Appender"<<std::endl;
+	getline(std::cin, A);
+	std::cout<<"Received"<<A<<std::endl;
+	
+	manip.appendLine(A,B);
+	
+	manip.saveMemory("data/output.txt");
+
 
 
 }

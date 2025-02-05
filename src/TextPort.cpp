@@ -2,6 +2,7 @@
 #include "algorithm"
 #include <cstdlib>
 #include <filesystem>
+#include <stdexcept>
 
 //PRIVATE==========================================================
 //PRIVATE VARIABLES
@@ -108,14 +109,14 @@ void TextPort::throwFileLinkError1(){
 	printCurrentWorkingDirectory();
 	std::cout<<"If the file is within the directory, the first file name should not have a / beforehand."<<std::endl;
 	std::cout<<"[Program Terminated]"<<std::endl<<std::endl<<std::flush;
-	exit(1);
+	throw std::runtime_error("exemption Thrown");
 }
 
 void TextPort::throwParameterError2(){
 		std::cout<<std::endl<<"[ERROR 2]:"<<std::endl;
 		std::cout<<"Function Parameters were out of file bounds;"<<std::endl;
 		std::cout<<"or invalid like 0 or negatives."<<std::endl<<std::flush;
-		exit(2);
+		throw std::runtime_error("exemption Thrown");
 }
 
 //PUBLIC============================================================
@@ -258,6 +259,7 @@ void TextPort::printFileToLineNum(int input){
 		if(genericFileVariableName.eof()){
 			//std::cout<<"End of data dump for: "+getFilePath()<<std::endl;
 			setFileToNULL();//File reset for cursor
+			throw std::runtime_error("\nprintFileToLineNum() was tasked with printing up to a line that didn't exist");
 			return;
 		}
 		std::cout<<readCurLineRem()<<std::endl;
