@@ -49,7 +49,9 @@ class TextPort{
 				/*Used in functions that make changes to the text file in any way.
 				This way the program has a way to know if reading everyting to check
 				Line count or whatever is neccesary.*/
-			
+		//IV
+			void throwFileLinkError();
+				/*A function to cause entire program to end and make main return 1*/
 	
 	public:
 		//1
@@ -61,6 +63,7 @@ class TextPort{
 			std::string getFileState();
 			
 			bool getFileEditedStatus();
+			
 
 		//3
 			void supConCout(std::string input);
@@ -94,6 +97,9 @@ class TextPort{
 			void printFileToLineNum(int input);
 			
 			void printEntireFile();
+				//Prints All of selected File to Console.
+			
+			void printCurrentWorkingDirectory();
 			
 			void noEscapeCharASCIIDataLinePrint();
 				/*Reads right of the cursor of remaing part of line.

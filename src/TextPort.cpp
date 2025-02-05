@@ -1,5 +1,7 @@
 #include "TextPort.h"
 #include "algorithm"
+#include <cstdlib>
+#include <filesystem>
 
 //PRIVATE==========================================================
 
@@ -41,6 +43,7 @@ void TextPort::changeFileState(std::string state){
 	}
 	else{
 		std::cout<<"changeFileState() was called but did nothing"<<std::endl;
+		throwFileLinkError();
 	}
 }
 
@@ -53,8 +56,11 @@ void TextPort::setFileToIn(){
 			this->fileState = "in";
 			//printFileLinkStatus();
 		}
-		else
-			std::cout<<std::endl<<"File Failed to link with setFileRead()";
+		else{
+			std::cout<<std::endl<<"SetFile state to in Failed"<<std::endl;
+			throwFileLinkError();
+		}
+		
 }
 
 void TextPort::setFileToOut(){
@@ -65,8 +71,9 @@ void TextPort::setFileToOut(){
 			this->fileState = "out";
 			//printFileLinkStatus();
 		}
-		else
-			std::cout<<std::endl<<"File Failed to link with setFileWrite()";
+		else{
+			throwFileLinkError();
+		}
 }
 
 void TextPort::setFileToApp(){
@@ -77,9 +84,9 @@ void TextPort::setFileToApp(){
 			//printFileLinkStatus();
 			
 		}
-		else
-			std::cout<<std::endl<<"File Failed to link with setFileAppend()";	
-	
+		else{
+			throwFileLinkError();
+		}
 	
 }
 
@@ -91,6 +98,20 @@ void TextPort::setFileToNULL(){
 //III
 void TextPort::markFileEdit(){
 	this->fileEdited = 1;
+}
+
+//IV
+void TextPort::throwFileLinkError(){
+	std::cout<<std::endl<<std::endl<<"[ERROR 1]:"<<std::endl;
+	std::cout<<"TextPort Class Object Failed to link to passed File."<<std::endl;
+	std::cout<<"File either does not exist, or the entered path is invalid."<<std::endl;
+	std::cout<<"_Common issues_:"<<std::endl;
+	std::cout<<"Did you Forget writing the file format into the path?"<<std::endl;
+	std::cout<<"Did you check if the path is written correctly relative to the current working directory?"<<std::endl;
+	printCurrentWorkingDirectory();
+	std::cout<<"If the file is within the directory, the first file name should not have a / beforehand."<<std::endl;
+	std::cout<<"[Program Terminated]"<<std::endl<<std::endl<<std::flush;
+	exit(1);
 }
 
 
@@ -186,18 +207,23 @@ void TextPort::printEntireFile(){
 		//This function uses readCurLineRem
 	
 	std::cout<<"\nTotal Data dump for: "+getFilePath()<<std::endl;
+	std::cout<<"Please note that the [i]:'s are not a part of the file."<<std::endl<<std::endl;
 	
 	int i=0;
 	setFileToNULL();//File reset for cursor
 	
 	do{
 		i++;
-		std::cout<<"Line["<<i<<"]:"+readCurLineRem()<<std::endl;
+		std::cout<<"["<<i<<"]:"+readCurLineRem()<<std::endl;
 	}while(!genericFileVariableName.eof());
 	
-	std::cout<<"End of Total Data Dump for: "+getFilePath()<<std::endl;
+	std::cout<<std::endl<<"End of Total Data Dump for: "+getFilePath()<<std::endl;
 		return;
 	
+}
+
+void TextPort::printCurrentWorkingDirectory(){
+	std::cout<< "Current working directory: " << std::filesystem::current_path() << std::endl;
 }
 
 void TextPort::noEscapeCharASCIIDataLinePrint(){
