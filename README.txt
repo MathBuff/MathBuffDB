@@ -1,4 +1,4 @@
-Last Updated: 1/30/2025
+Last Updated: 1/31/2025
 ____====PROGRAM BUILD====______________________________________________________________
 Everything was navigated and tested with WSL ubuntu.
 Scripts are in bash.
@@ -64,5 +64,5 @@ as possible.
 ____====MISC====_________________________________________________________________________
 Refference for me to get a fast WSL start:
 cd /mnt
-cd /c
-cd /Users/Lucas/documents/AProjects/Prog/MathBuffDB
+cd c
+cd Users/Lucas/documents/AProjects/Prog/MathBuffDB

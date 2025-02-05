@@ -1,7 +1,26 @@
+
+//#include<stdio.h> will also work
 #include <iostream>
-#include "TextPort.h"
 
 int main () {
+	
+	std::cout << "👷🏾سذضػ Build a better future with Allah" << std::endl;
+	std::string input;
+	std::cin>>input;
+	std::cin>>input;
+	std::cin>>input;
+	std::cout << input << std::endl;
+	
+	
+ return 0; 
+}
+
+//#include "CPPSocket.h"
+//CPPSocket A;
+
+//#include "TextPort.h"
+
+/*
 	TextPort KerbalTable("data/names.txt");
 	
 	KerbalTable.printEntireFile();
@@ -13,9 +32,7 @@ int main () {
 	
 	
 	std::cout<<"====Program Stop===="<<std::endl;
- 
- return 0; 
-}
+	*/
 
 
 

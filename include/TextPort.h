@@ -1,5 +1,5 @@
-#ifndef _LM_ASCIITABLE_H_  
-#define _LM_ASCIITABLE_H_
+#ifndef _LM_TEXTPORT_H_  
+#define _LM_TEXTPORT_H_
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -44,7 +44,7 @@ class TextPort{
 
 			void setFileToNULL();
 			
-		//II
+		//III
 			void markFileEdit();
 				/*Used in functions that make changes to the text file in any way.
 				This way the program has a way to know if reading everyting to check
