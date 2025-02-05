@@ -3,13 +3,13 @@
 #include <iostream>
 
 int main () {
-	
+	std::cout << "Messege of The day:" << std::endl;
 	std::cout << "👷🏾سذضػ Build a better future with Allah" << std::endl;
-	std::string input;
-	std::cin>>input;
-	std::cin>>input;
-	std::cin>>input;
-	std::cout << input << std::endl;
+	std::cout << std::endl;
+	std::cout << "_Program Start_" << std::endl;
+
+	std::cout << std::endl;
+		std::cout << "_Program End_" << std::endl;
 	
 	
  return 0; 
