@@ -14,8 +14,9 @@ readCurLineRem();
 
 checkTotalLineCount();
 
-Are the functions of note, everything else is kinda fluff.
+printFile();
 
+Are the functions of note, everything else is kinda fluff.
 
 Advanced operations like ommiting lines and such was not dutiful.
 Database behavior should be better implemented with another class and using program memory with RAM.
@@ -39,11 +40,6 @@ class TextPort{
 				out: The wipe and write state
 				app: The append state
 				*/
-			
-			
-			bool fileEdited;
-				//True: The text file had been edited by the program internally
-				//False: The text file had not been internally edited by the program.
 				
 		//PRIVATE FUNCTIONS: 
 			//Class Users can ignore these functions, internal object use only.
@@ -59,25 +55,26 @@ class TextPort{
 
 				void setFileToNULL();
 				
-			//III
-				void markFileEdit();
-					/*Used in functions that make changes to the text file in any way.
-					This way the program has a way to know if reading everyting to check
-					Line count or whatever is neccesary.*/
-			//IV
-				void throwFileLinkError();
-					/*A function to cause entire program to end and make main return 1*/
+					
+			//III (ERRORS)
+				void throwFileLinkError1();
+					/*A function to cause entire program to end and make main return 1.
+					Does so in the specfic event that the last entered path for the object,
+					is not accessable or valid*/
+					
+				void throwParameterError2();
+					/*Error Thrown if printFileLineToLine is used incorrectly*/
 	
 	public:
 		//1 (Constructor)
-			TextPort(std::string filePathInput);
+			TextPort(std::string filePathInput = "pleaseSetFilePath");
 		
-		//2 (Getters)
+		//2 (Getters & Setters)
 			std::string getFilePath();
 
 			std::string getFileState();
 			
-			bool getFileEditedStatus();
+			void setFilePath(std::string input);
 			
 
 		//3 (File writing Functions)
@@ -105,9 +102,17 @@ class TextPort{
 				!_This should be your main way of reading files._!*/
 		
 			std::string readCurCin();
-				/*"Read Current Line via cin like method"
+				/*"Read the Current Line which the cursor lies via cin like method"
 				Reads first non whitespace input, 
 				but Stops at following whitespace ( space, tab, or newline.)*/
+				
+			std::string findLineReturn(int lineNumber);
+				/*"Find Line And Return Value"
+				It reads but doesn't return until you reach the desired line number.
+				At proper line, it then returns the whole line.
+				Out of bounds line Number will throw an error.
+				Do not use for anything but one and done reads to avoid slowdowns.
+				*/
 				
 		//5 (Cursor)
 			void resetFileState();
@@ -120,6 +125,7 @@ class TextPort{
 		
 			void printFile();
 				//Prints Entire File as is
+				
 			void printFileWithLineNum();
 				//Prints All of selected File to Console with [i]: line numbers
 			
@@ -127,6 +133,13 @@ class TextPort{
 				/*Prints from zero to input lines of the text file.
 				If the line number is greater than that of the lines in the file it merely
 				stops at the end of the file.*/
+			
+			void printFileLineToLine(int firstLine, int lastLine);
+				//Will read but not cout until first line reached, it will continue printing until last line is usurped.
+			
+			void printFileLine(int lineNumber);
+				//Will read down to the line number and state the contents in console.
+				//Much More effective to use printLineToLine if multiple elements in a row.
 			
 			void printFileLinkStatus(); 
 				/*Tells you if file is reading/writing & the path at the moment.*/

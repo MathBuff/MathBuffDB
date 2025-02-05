@@ -46,7 +46,7 @@ void TextPort::changeFileState(std::string state){
 	}
 	else{
 		std::cout<<"changeFileState() was called but did nothing"<<std::endl;
-		throwFileLinkError();
+		throwFileLinkError1();
 	}
 }
 
@@ -60,8 +60,7 @@ void TextPort::setFileToIn(){
 			//printFileLinkStatus();
 		}
 		else{
-			std::cout<<std::endl<<"SetFile state to in Failed"<<std::endl;
-			throwFileLinkError();
+			throwFileLinkError1();
 		}
 		
 }
@@ -75,7 +74,7 @@ void TextPort::setFileToOut(){
 			//printFileLinkStatus();
 		}
 		else{
-			throwFileLinkError();
+			throwFileLinkError1();
 		}
 }
 
@@ -88,7 +87,7 @@ void TextPort::setFileToApp(){
 			
 		}
 		else{
-			throwFileLinkError();
+			throwFileLinkError1();
 		}
 	
 }
@@ -98,15 +97,10 @@ void TextPort::setFileToNULL(){
 	this->fileState = "NULL";
 }
 
-//III
-void TextPort::markFileEdit(){
-	this->fileEdited = 1;
-}
-
-//IV
-void TextPort::throwFileLinkError(){
+//III (ERRORS)
+void TextPort::throwFileLinkError1(){
 	std::cout<<std::endl<<std::endl<<"[ERROR 1]:"<<std::endl;
-	std::cout<<"TextPort Class Object Failed to link to passed File."<<std::endl;
+	std::cout<<"TextPort Class Object Failed to access passed File."<<std::endl;
 	std::cout<<"File either does not exist, or the entered path is invalid."<<std::endl;
 	std::cout<<"_Common issues_:"<<std::endl;
 	std::cout<<"Did you Forget writing the file format into the path?"<<std::endl;
@@ -117,23 +111,30 @@ void TextPort::throwFileLinkError(){
 	exit(1);
 }
 
+void TextPort::throwParameterError2(){
+		std::cout<<std::endl<<"[ERROR 2]:"<<std::endl;
+		std::cout<<"Function Parameters were out of file bounds;"<<std::endl;
+		std::cout<<"or invalid like 0 or negatives."<<std::endl<<std::flush;
+		exit(2);
+}
 
 //PUBLIC============================================================
 
 //1 (Constructor)
 TextPort::TextPort(std::string filePathInput)
-	:filePath(filePathInput),fileState("NULL"),fileEdited(0){
+	:filePath(filePathInput),fileState("NULL"){
 }
 
-//2 (Getters)
+//2 (Getters & Setters)
 	std::string TextPort::getFilePath(){
 		return this->filePath;
 	}
 	std::string TextPort::getFileState(){
 		return this->fileState;
 	}
-	bool TextPort::getFileEditedStatus(){
-		return this->fileEdited;
+	
+	void TextPort::setFilePath(std::string input){
+		this->filePath = input;
 	}
 	
 //3 (File writing Functions)
@@ -142,13 +143,11 @@ void TextPort::supConCout(std::string input){
 	
 	changeFileState("out"); 
 	genericFileVariableName<<input;	
-	markFileEdit();
 }
 
 void TextPort::appendCout(std::string input){
 	changeFileState("app");
 	genericFileVariableName<<input;
-	markFileEdit();
 }
 
 //4 (File reading Functions)
@@ -179,6 +178,36 @@ std::string  TextPort:: readCurCin(){
 	else
 	std::cout<<std::endl<<"Failed to read Data with readCin(), File not Open";
 	return "NoData";
+}
+
+std::string TextPort::findLineReturn(int lineNumber){
+	
+	int j = checkTotalLineCount();
+	int i = 1;
+	
+	if(lineNumber<=0||j<lineNumber){
+		throwParameterError2();
+		return "";
+	}
+	else{
+	
+		while(i!=lineNumber){
+			i++;
+			readCurLineRem();
+		
+			if(genericFileVariableName.eof()){
+				std::cout<<std::endl<<"Given Bounds for findLineReturn out of range for: "+getFilePath()<<std::endl;
+				setFileToNULL();//File reset for cursor
+				throwParameterError2();
+				return "";
+			}
+		}
+		
+		std::string solution = readCurLineRem();
+		setFileToNULL();//File reset for cursor
+		return solution;
+		
+	}
 }
 
 //5 (Cursor)
@@ -234,6 +263,56 @@ void TextPort::printFileToLineNum(int input){
 		std::cout<<readCurLineRem()<<std::endl;
 	
 	}
+}
+
+void TextPort::printFileLineToLine(int firstLine, int lastLine){
+	int j = checkTotalLineCount();
+	int i = 1;
+	
+	if(firstLine>lastLine||lastLine<=0||firstLine<=0||j<lastLine){
+		throwParameterError2();
+	}
+	else{
+	
+		
+		while(i!=firstLine){
+			i++;
+			readCurLineRem();
+		
+			if(genericFileVariableName.eof()){
+				std::cout<<std::endl<<"Given Bounds for PrintFileLineToLine out of range for: "+getFilePath()<<std::endl;
+				setFileToNULL();//File reset for cursor
+				return;
+			}
+		}
+		
+		std::cout<<readCurLineRem()<<std::endl;
+		
+		while(i!=lastLine){
+			i++;
+			std::cout<<readCurLineRem()<<std::endl;
+		
+			if(genericFileVariableName.eof()){
+				std::cout<<std::endl<<"Given Bounds for PrintFileLineToLine out of range for: "+getFilePath()<<std::endl;
+				setFileToNULL();//File reset for cursor
+				return;
+			}
+			
+		}	
+		
+		if(lastLine==firstLine){
+			return;
+		}
+		else
+			std::cout<<readCurLineRem()<<std::endl;
+		return;
+		
+	}
+}
+
+void TextPort::printFileLine(int lineNumber){
+		printFileLineToLine(lineNumber, lineNumber);
+	
 }
 
 void TextPort::printFileLinkStatus(){ 

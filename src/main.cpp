@@ -2,20 +2,20 @@
 //CPPSocket A;
 #include <iostream>
 #include "TextPort.h"
-
+#include "TextLoad.h"
 
 int main () {
-	TextPort File("data/names.txt");
+	TextPort File ("data/names.txt");
 	
-	File.appendCout("🤤🤤🤤🤤🤤🤤");
-	File.printFile();
+	std::cout<<File.checkTotalLineCount()<<std::endl;
 	
+	TextLoad manip;
 	
- return 0; 
+	manip.loadMemory("data/names.txt");
+	
+	std::cout<<manip.getMemoryLineCount()<<std::endl;
+	
+	manip.printMemory();
+
+
 }
-
-
-
-
-
-
