@@ -122,10 +122,8 @@ void TextPort::throwFileLinkError(){
 
 //1 (Constructor)
 TextPort::TextPort(std::string filePathInput)
-	:filePath(filePathInput),fileState("NULL"),totalLineCount(-1),fileEdited(0){
+	:filePath(filePathInput),fileState("NULL"),fileEdited(0){
 }
-
-
 
 //2 (Getters)
 	std::string TextPort::getFilePath(){
@@ -183,7 +181,108 @@ std::string  TextPort:: readCurCin(){
 	return "NoData";
 }
 
-//5 (OS Cursor Control)
+//5 (Cursor)
+	void TextPort::resetFileState(){
+		setFileToNULL();
+	}
+
+//6 (Console Printing Functions)
+
+void TextPort::printFile(){
+	setFileToNULL();//File reset for cursor
+	int lineCount = checkTotalLineCount();
+	
+	for (int i = 0; i < lineCount; i++){
+		std::string buffer = readCurLineRem();
+		std::cout << buffer << std::endl;
+	}
+	setFileToNULL();//File reset for cursor
+}
+
+void TextPort::printFileWithLineNum(){
+	//std::cout<<"\nTotal Console Data dump for: "+getFilePath()<<std::endl;
+	//std::cout<<"Please note that the [i]:'s are not a part of the file."<<std::endl<<std::endl;
+	
+	int i=0;
+	setFileToNULL();//File reset for cursor
+	
+	do{
+		i++;
+		std::cout<<"["<<i<<"]:"+readCurLineRem()<<std::endl;
+	}while(!genericFileVariableName.eof());
+	
+	//std::cout<<std::endl<<"End of Total Data Dump for: "+getFilePath()<<std::endl;
+	setFileToNULL();//File reset for cursor
+		return;
+	
+}
+
+
+void TextPort::printFileToLineNum(int input){
+	//This function uses readCurLineRem
+	//std::cout<<"\nDumping the lines 1 to "<<input<<" of: "+getFilePath()<< " to console"<<std::endl;
+	setFileToIn();//This needs to be set so that file.eof doesn't read incorrectly
+	int i=0;
+	while(i!=input){
+	i++;
+		
+		if(genericFileVariableName.eof()){
+			//std::cout<<"End of data dump for: "+getFilePath()<<std::endl;
+			setFileToNULL();//File reset for cursor
+			return;
+		}
+		std::cout<<readCurLineRem()<<std::endl;
+	
+	}
+}
+
+void TextPort::printFileLinkStatus(){ 
+	std::cout<< "Linked to file: ["+getFilePath()+"] for "+getFileState()<<std::endl;
+}
+
+void TextPort::printCurrentWorkingDirectory(){
+	std::cout<< "Current working directory: " << std::filesystem::current_path() << std::endl;
+}
+
+void TextPort::noEscapeCharASCIIDataLinePrint(){
+	
+	std::cout<<"Dumping line Data with no escape charaters"<<std::endl;
+	std::string line = readCurLineRem();
+	for (char c : line) {
+    std::cout << "[" << c << "] -> ASCII: " << static_cast<int>(c) << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+//7 (File Analysis)
+int TextPort::checkTotalLineCount(){
+		
+	int i=0;
+	//Reseting File so that the cursor starts at the top with read line.
+	//This function uses readCurLineRem
+		setFileToNULL();
+	
+		do {
+			i++;
+			readCurLineRem();
+		}while(!genericFileVariableName.eof());
+		
+	setFileToNULL();
+	//This resets the cursor again so that future processes won't get messed up.
+		
+		return i;
+}
+
+//8 (Utility)
+std::string TextPort::removeCarriageReturns(const std::string& input) {
+    std::string result = input;
+    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
+    return result;
+}
+
+//REMOVED
+/*
+//A (OS Cursor Control) [Stubbed Only]
 	void cursorToLineStart(int lineNumber){
 		return;
 	}
@@ -197,7 +296,7 @@ std::string  TextPort:: readCurCin(){
 	}
 	
 	int cursorCurrentLine(){
-		return 0
+		return 0;
 	}
 	
 	int cursorCurrentLinePositionCharUTF_8(){
@@ -212,7 +311,7 @@ std::string  TextPort:: readCurCin(){
 		return;
 	}
 	
-//6 (Writing Methods)
+//B (Writing Methods) [Stubbed Only]
 	
 	void wipeLine(int lineNumber){
 		return;
@@ -229,93 +328,5 @@ std::string  TextPort:: readCurCin(){
 	std::string getLineRow(int lineNumber){
 		return "No Integration";
 	}
-
-	
-
-//7 (Console Printing Functions)
-
-void TextPort::printFileLinkStatus(){ 
-	std::cout<< "Linked to file: ["+getFilePath()+"] for "+getFileState()<<std::endl;
-}
-
-void TextPort::printFileToLineNum(int input){
-	//This function uses readCurLineRem
-	std::cout<<"\nDumping the lines 1 to "<<input<<" of: "+getFilePath()<<std::endl;
-	setFileToNULL();//File reset for cursor
-	int i=0;
-	while(i!=input){
-	i++;
-		if(genericFileVariableName.eof()){
-			std::cout<<"End of data dump for: "+getFilePath()<<std::endl;
-			return;
-		}
-	std::cout<<"Line["<<i<<"]:"+readCurLineRem()<<std::endl;
-	}
-}
-
-void TextPort::printEntireFile(){
-		//This function uses readCurLineRem
-	
-	std::cout<<"\nTotal Data dump for: "+getFilePath()<<std::endl;
-	std::cout<<"Please note that the [i]:'s are not a part of the file."<<std::endl<<std::endl;
-	
-	int i=0;
-	setFileToNULL();//File reset for cursor
-	
-	do{
-		i++;
-		std::cout<<"["<<i<<"]:"+readCurLineRem()<<std::endl;
-	}while(!genericFileVariableName.eof());
-	
-	std::cout<<std::endl<<"End of Total Data Dump for: "+getFilePath()<<std::endl;
-		return;
-	
-}
-
-void TextPort::printCurrentWorkingDirectory(){
-	std::cout<< "Current working directory: " << std::filesystem::current_path() << std::endl;
-}
-
-void TextPort::noEscapeCharASCIIDataLinePrint(){
-	
-	std::cout<<"Dumping line Data with no escape charaters"<<std::endl;
-	std::string line = readCurLineRem();
-	for (char c : line) {
-    std::cout << "[" << c << "] -> ASCII: " << static_cast<int>(c) << std::endl;
-}
-	std::cout << std::endl;
-}
-
-//8 (File Analysis)
-int TextPort::checkTotalLineCount(){
-	
-	if(this->fileEdited){
-	/*Condition checks if any changes occured.
-	This way it knows if its neccesary to count everything again*/
-	
-	int i=0;
-	//Reseting File so that the cursor starts at the top with read line.
-	//This function uses readCurLineRem
-		setFileToNULL();
-	
-		do {
-			i++;
-			readCurLineRem();
-		}while(!genericFileVariableName.eof());
-		
-		this-> totalLineCount = i;
-		
-		return i;
-	}
-	else{
-		return this->totalLineCount;
-	}
-}
-
-//9 (Utility)
-std::string TextPort::removeCarriageReturns(const std::string& input) {
-    std::string result = input;
-    result.erase(std::remove(result.begin(), result.end(), '\r'), result.end());
-    return result;
-}
+*/
 
