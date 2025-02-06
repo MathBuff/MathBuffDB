@@ -3,27 +3,30 @@
 #include <iostream>
 #include "TextPort.h"
 #include "TextLoad.h"
+#include <fstream>
+struct Record{
+	char name[40];
+	unsigned short age;
+	float gp;
+};
 
 int main () {
+	std::fstream f ("data/records.dat",std::ios::out|std::ios::binary);
+	Record rec {"Jeffery Epstien",81,3.49};
+	if(f){
+	f.write(reinterpret_cast<char*>(&rec),sizeof(Record));
+	f.close();
+	}
 	
-	TextLoad manip;
-	manip.loadMemory("data/input.txt");
-	std::string A;
-	int B;
+	Record rec2;
 	
-	manip.printMemory();
-
-	std::cout<<"Line to Append"<<std::endl;
-	std::cin>>B;
-	std::cin.ignore();
-	std::cout<<"Appender"<<std::endl;
-	getline(std::cin, A);
-	std::cout<<"Received"<<A<<std::endl;
+	f.open("data/records.dat",std::ios::in|std::ios::binary);
+	f.read(reinterpret_cast<char*>(&rec2),sizeof(Record));
 	
-	manip.appendLine(A,B);
-	
-	manip.saveMemory("data/output.txt");
-
+	std::cout<<rec2.name<<std::endl;
+	std::cout<<rec2.age<<std::endl;
+	std::cout<<rec2.gp<<std::endl;
+	return 0;
 
 
 }
