@@ -4,40 +4,32 @@
 #include <fstream>
 #include <string>
 #include <filesystem>
-class BinaryPort{
-		private:
-		//PRIVATE VARIABLES
-			std::string fileState; 
-			std::fstream genericFileVariableName;
-			std::string filePath;
-			struct chunk;
-			
-		//PRIVATE FUNCTIONS
-			void changeFileState(std::string state);
-			
-			void setFileToIn();
-			
-			void setFileToOut();
-				
-			void setFileToApp();
 
-			void setFileToNULL();
-			
-		//ERRORS
-			void throwFileLinkError1();
+template <typename genChunk>
+class BinaryPort{
+	
+		private:
+			//PRIVATE VARIABLES
+				std::string filePath;
 			
 		public:
-		//PUBLIC FUNCTIONS
-			BinaryPort(struct newChunk);
-			
-			
-			
-			void printCurrentWorkingDirectory();
-				/*Shows you the path that you can access other files from.
-				Its the working directory of the program, its like where the program is in the filing system.*/
-			
-			
+			// (Constructor)
+				BinaryPort();
+				
+			// (Setters & Getters)
+				
+				void setFilePath(std::string input);
+				
+				std::string getFilePath();
+				
+				void setNewChunk(genChunk newLoadedChunk);
+				
+				int getBinaryFileSize();
+					//0 to 2,147,483,647 bytes on 32bit sys(2.1ish gb max File Size)
+					
+				int getChunkSize();
 
+				int calculateNumChunksInFile();
 };
 
 #endif // Header guard end
