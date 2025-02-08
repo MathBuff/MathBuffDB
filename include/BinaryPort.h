@@ -25,9 +25,9 @@ class BinaryPort{
 			//PRIVATE VARIABLES
 				//Universal fstream Variable
 					std::fstream filer;
+					
 				//File Related Information
-					std::string filePathTarget;
-					int chunkSize;
+					std::string filePath = "no_set_target";
 					
 				//Class State Information & Logic
 					enum class state {
@@ -40,38 +40,36 @@ class BinaryPort{
 					state currentState;
 				
 					void stateChanger(state code);
+					
+					void fileOpenedErrorCheck();
 				
 		public:	
 			// (Setters & Getters)
 				
-				void setFilePathTarget(std::string input);
-				void setChunkSize(int chunkBytes);
-				
+				void setFilePath(std::string input);
+				int checkChunkSize();//Returns value in bytes
 				std::string getFilePath();
-				int getChunkSize();
 				
 			//Analysis Methods
 				
-				int checkBinFileSize();
-					//Returns the number of bytes in target Binary file
-
-				int checkBinFileChunkCount();
-					//Calculates number of chunks if a file.
+				std::streampos checkBinFileSize();
+					/*Returns the number of bytes in target Binary file.
+					Might not be needed in all honesty since reading in you can just
+					count the chunks given you know their size*/
 			
 			//Reading
-				Chunk readChunk();
+				void read(Chunk readReturn);
 					/*Reads the next chunk in the file.
 					Each read moves the cursor 1 chunk, allowing for repeated reads 
-					to read the whole file.
-					*/
+					to read the whole file.*/
 			
 			//Supplanting
-				void supplantChunk(Chunk data);
+				void supplant(Chunk data);
 					/*Wipes or creates target file from scratch and begins writing chunks.
 					Cursor moves with chunks allowing for repeated writes.*/
 			
 			//Appending
-				void appendChunk(Chunk data);
+				void append(Chunk data);
 					/*Writes new Chunks to the end of a target file.
 					If the target file does not exist it will be made.
 					Cursor moves with appended writes allowing for repeated writes.*/

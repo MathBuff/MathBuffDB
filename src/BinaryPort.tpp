@@ -3,118 +3,124 @@
 
 //Private:
 
-			template <typename Chunk>
-			void BinaryPort<Chunk>::stateChanger(state code){
-				switch(code){
+	template <typename Chunk>
+	void BinaryPort<Chunk>::stateChanger(state code){
+		switch(code){
+			
+			case state::FREE:
+					//std::cout<<"FREE"<<std::endl;
+					currentState = state::FREE;
+					filer.close();
+				break; 
+				
+			case state::SUPPLANT:
+				if(currentState == state::SUPPLANT){
+					//Nothing needs to be done
+				}
+					else{
+						filer.open(filePath, std::ios::out | std::ios::binary);
+						currentState = state::SUPPLANT;
+						//std::cout<<"SUPPLANT"<<std::endl;
+						fileOpenedErrorCheck();
+					}
+				break;
+				
+			case state::READ:
+				if(currentState == state::READ){
+					//Nothing needs to be done
 					
-					case state::FREE:
-							std::cout<<"FREE"<<std::endl;
-							filer.close();
-						break; 
-						
-					case state::SUPPLANT:
-						if(currentState == state::SUPPLANT){
-							//Nothing needs to be done
-						}
-						else{
-							filer.open(filePathTarget, std::ios::out | std::ios::binary);
-							//if you are writing binary with the fstream object
-							
-							currentState = state::SUPPLANT;
-							
-							std::cout<<"SUPPLANT"<<std::endl;
-						}
-						break;
-						
-					case state::READ:
-						if(currentState == state::READ){
-							//Nothing needs to be done
-							
-						}
-						else{
-					
-							filer.open(filePathTarget, std::ios::in | std::ios::binary);
-							//if you are reading binary with the fstream object
-							
-							std::cout<<"READ"<<std::endl;
-						}
-						break;
-						
-					case state::APPEND:
-						if(currentState == state::APPEND){
-							//Nothing needs to be done
-						}
-						else{
-					
-							filer.open(filePathTarget, std::ios::app | std::ios::binary);
-							//if you are appending binary with the fstream object
-							
-							std::cout<<"APPEND"<<std::endl;
-						}
-						break;
-					}	
-			}
+				}
+					else{
+						filer.open(filePath, std::ios::in | std::ios::binary);
+						currentState = state::READ;
+						//std::cout<<"READ"<<std::endl;
+						fileOpenedErrorCheck();
+					}
+				break;
 				
-//public:	
-		// (Setters & Getters)
-		
-			template <typename Chunk>
-			void BinaryPort<Chunk>::setFilePathTarget(std::string input){
-				
-			}
-			
-			template <typename Chunk>
-			void BinaryPort<Chunk>::setChunkSize(int chunkBytes){
-				
-			}
-			
-			template <typename Chunk>
-			std::string BinaryPort<Chunk>::getFilePath(){
-				return "";
-			}
-			
-			template <typename Chunk>
-			int BinaryPort<Chunk>::getChunkSize(){
-				return 1;
-			}
-			
-		//Analysis Methods
-			
-			template <typename Chunk>
-			int BinaryPort<Chunk>::checkBinFileSize(){
-				return 1;
-			}
-				
-
-			template <typename Chunk>
-			int BinaryPort<Chunk>::checkBinFileChunkCount(){
-				return 1;
-			}
-				
-		
-		//Reading
-			template <typename Chunk>
-			Chunk BinaryPort<Chunk>::readChunk(){
-				Chunk A;
-				return A;
+			case state::APPEND:
+				if(currentState == state::APPEND){
+					//Nothing needs to be done
+				}
+					else{
+						filer.open(filePath, std::ios::app | std::ios::binary);
+						currentState = state::APPEND;
+						//std::cout<<"APPEND"<<std::endl;
+						fileOpenedErrorCheck();
+					}
+				break;
 			}	
-		
-		//Supplanting
-			template <typename Chunk>
-			void BinaryPort<Chunk>::supplantChunk(Chunk data){
-				
-			}
+	}
 			
+	template <typename Chunk>
+	void BinaryPort<Chunk>::fileOpenedErrorCheck(){
+		if(filer.is_open()){
+			//No error
+		}
+		else{
+			throw std::ios_base::failure("BinaryPort Failed to open the Target file");
+		}
+	}
+
+//public:	
+	//(Setters & Getters)
+
+		template <typename Chunk>
+		void BinaryPort<Chunk>::setFilePath(std::string input){
+			this->filePath = input;
+		}
 		
-		//Appending
-			template <typename Chunk>
-			void BinaryPort<Chunk>::appendChunk(Chunk data){
-				
-			}
+		template <typename Chunk>
+		int BinaryPort<Chunk>::checkChunkSize(){
+			Chunk instance;
+			return sizeof(instance);
+		}
+		
+		template <typename Chunk>
+		std::string BinaryPort<Chunk>::getFilePath(){
 			
-			template <typename Chunk>
-			void BinaryPort<Chunk>::printFuck(){
-				std::cout<<"FUCK"<<std::endl;
-				state A = state::FREE;
-				stateChanger(A);
-			}
+			return this->filePath;
+		}
+
+	//Analysis Methods
+		
+		template <typename Chunk> //Need to test this
+			std::streampos BinaryPort<Chunk>::checkBinFileSize(){
+			stateChanger(state::FREE);
+			filer.open(filePath, std::ios::binary);
+			
+			filer.seekg(0, std::ios::end); // Move the file cursor to the end
+			std::streampos fileSize = filer.tellg();
+			stateChanger(state::FREE);
+			
+			return fileSize;
+		}
+	
+	//Reading
+		template <typename Chunk> //Need to test
+		void BinaryPort<Chunk>::read(Chunk readReturn){
+			stateChanger(state::READ);
+			filer.read(reinterpret_cast<char*>(&readReturn), sizeof(readReturn));
+		}	
+	
+	//Supplanting
+		template <typename Chunk>
+		void BinaryPort<Chunk>::supplant(Chunk data){
+			stateChanger(state::SUPPLANT);
+			filer.write(reinterpret_cast<char*>(&data), sizeof(data));
+		}
+		
+	
+	//Appending
+		template <typename Chunk>
+		void BinaryPort<Chunk>::append(Chunk data){
+			stateChanger(state::APPEND);
+			filer.write(reinterpret_cast<char*>(&data), sizeof(data));
+		}
+		
+	//Print Text Function
+		template <typename Chunk>
+		void BinaryPort<Chunk>::printFuck(){
+
+			std::cout<<"FUCK"<<std::endl;
+		}
