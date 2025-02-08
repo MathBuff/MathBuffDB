@@ -1,4 +1,26 @@
 Last Updated: 2/7/2025
+____====MISC====_________________________________________________________________________
+Refference for me to get a fast WSL start:
+cd /mnt
+cd c
+cd Users/Lucas/documents/AProjects/Prog/MathBuffDB
+
+____==== Main Source & Header Composition ====___________________________________________
+#Check .h and .cpp, these /files are an abstraction.
+
+
+/TextPort: 
+Able to control the normal functions of opening and closing Text Files with Ease.
+
+/TextLoad: 
+Able to load in text files into a vector and make manipulations easily.
+It uses the TextportClass to provide less verbose functionaility.
+
+/BinaryPort
+/BinaryLoad
+/CPPSocket
+All of these are WIP
+
 ____====PROGRAM BUILD====______________________________________________________________
 Everything was navigated and tested with WSL ubuntu.
 Scripts are in bash.
@@ -22,7 +44,7 @@ Github included.
 
 ____****MathBuffDB-Source****__________________________________________________________
 /src
-contains all the cpp files and main, aka the source files.
+contains all the cpp files and main(), aka the source files.
 
 /include
 contains all header files for my source files.
@@ -50,19 +72,3 @@ It caused problems until I figured I change a few settings in notepads and creat
 new file from within notepads.
 I was able to get the unix line ending down, which is compatible with bash.
 
-____==== Main Source & Header Composition ====___________________________________________
-#Check .h and .cpp, these /files are an abstraction.
-
-/Test
-This is just a experimental setup section That I'm saving for learning purposes. 
-
-/TextPort
-This is a text File interface being developed for C++.
-Plan is to make using and reading text files a piece of cake and as straight forward
-as possible.
-
-____====MISC====_________________________________________________________________________
-Refference for me to get a fast WSL start:
-cd /mnt
-cd c
-cd Users/Lucas/documents/AProjects/Prog/MathBuffDB

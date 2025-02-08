@@ -1,11 +1,14 @@
 #!/bin/bash
 
-# Compile the C++ file using clang++
+# Compile the C++ files using clang++ 
+# -I include tells clang to search the 'include' directory for header files
+# -I src tells clang to also look in the 'src' directory for .tpp files
+clang++ -Iinclude -Isrc src/*.cpp -o build/a.out
 
-clang++ -Iinclude src/*.cpp -o build/a.out
+# this also make it so that if I accidently include a .cpp file in a header file 
+#it won't be caught by the complier.
 
 # Check if the compilation was successful & Run Program
-
 if [ $? -eq 0 ]; then
     # Run the compiled program
     ./build/a.out
@@ -13,3 +16,20 @@ else
     echo "Program Ate shit"  # This runs if clang++ encounters errors
     exit 1
 fi
+
+#Script Version 1
+#!/bin/bash
+
+# Compile the C++ file using clang++
+
+#clang++ -Iinclude src/*.cpp -o build/a.out
+
+# Check if the compilation was successful & Run Program
+
+#if [ $? -eq 0 ]; then
+    # Run the compiled program
+#    ./build/a.out
+#else
+#    echo "Program Ate shit"  # This runs if clang++ encounters errors
+#    exit 1
+#fi

@@ -1,16 +1,13 @@
 #include "TextLoad.h"
-#include <vector>
+#include <deque>
 #include <stdexcept>
 //MEMORY FUNCTIONS & OBJECTS
-	TextLoad::TextLoad(){ //Constructor Not Needed
-		return;
-	}
 	
 	void TextLoad::loadMemory(std::string loadFilePath){ 
 		File.setFilePath(loadFilePath);
 		
 		int j = File.checkTotalLineCount();
-		memory.reserve(j);
+
 		
 		for(int i = 1;i<=j;i++){
 			memory.push_back(File.readCurLineRem());
@@ -50,14 +47,11 @@
 	}
 	
 	void TextLoad::clearMemory(){
-		memory.clear();
-		memory.shrink_to_fit();
-		return;
+		std::deque<std::string>().swap(memory);
+		//Moves current deque contents to a new deque, leaving the original blank.
+		//Once this function moves out of scope, the new deque is properly deleted.
 	}
 	
-	TextLoad::~TextLoad(){ //Destructor Not Needed
-		return;
-	}
 	
 //ACCESS FUNCTIONS
 	int TextLoad::getMemoryLineCount(){//CHECK
@@ -83,19 +77,16 @@
 
 	void TextLoad::printLine(int lineNumber){
 		std::cout<< getLine(lineNumber) <<std::endl;
-		return;
 	}
 	
 	void TextLoad::reWriteLine(std::string input,int lineNumber){
 		memory.at(lineNumber-1) = input;
-		return;
 	}
 	
 	void TextLoad::prependLine(std::string input, int lineNumber){
 		std::string lineToPrepend = getLine(lineNumber);
 		std::string prepender = input;
 		reWriteLine(prepender+lineToPrepend,lineNumber);
-		return;
 	}
 	
 			
@@ -103,26 +94,24 @@
 		std::string lineToAppend = getLine(lineNumber);
 		std::string appender = input;
 		reWriteLine(lineToAppend+appender,lineNumber);
-		return;
-				
-		
 	}
 		
 	
 	void TextLoad::newTopLine(std::string input){
-		memory.emplace(memory.begin(), input);
-		
-		return;
+		memory.emplace_front(input);
 	}
 	
 	void TextLoad::newBottemLine(std::string input){
 		memory.emplace_back(input);
-		return;
 	}
 	
 	void TextLoad::removeLine(int lineNumber){
-		memory.erase(memory.begin()+lineNumber-1);
-		return;
+		if (lineNumber > 0 && lineNumber <= getMemoryLineCount()){
+				memory.erase(memory.begin() + (lineNumber - 1));
+		} 
+		else {
+				throw std::out_of_range("removeLine() received an out-of-bounds line number");
+		}
 	}
 	
 	void TextLoad::removeLineRange (int firstLine, int lastLine){
@@ -134,11 +123,8 @@
 			throw std::runtime_error("removeLineRange Had out of bounds parameters");
 		}
 		else{
-				while(i<=lastLine-1){
-					memory.erase(memory.begin()+i);
-					i++;
-					
-				}		
-				return;	
+				memory.erase(memory.begin() + (firstLine - 1), memory.begin() + lastLine);
+				
+				memory.shrink_to_fit();//Shrinks memory to release unused capacity post erase.
 		}
 	}

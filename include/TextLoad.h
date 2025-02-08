@@ -1,19 +1,17 @@
 #ifndef _LM_TEXTLOAD_H_  
 #define _LM_TEXTLOAD_H_
 #include "TextPort.h"
-#include <vector>
+#include <deque>
 class TextLoad{
 	
 	private:
 		TextPort File;
 		
-		std::vector<std::string> memory;
+		std::deque<std::string> memory;
 
 	public:
 		//MEMORY FUNCTIONS & OBJECTS
-			TextLoad();
-				//Doesn't need to exist
-			
+				
 			void loadMemory(std::string loadFilePath);
 				//Loads in the entirity of a UTF-8 Text File
 			
@@ -25,9 +23,6 @@ class TextLoad{
 				
 			void clearMemory();
 				//Wipes the active memory of the Text Load class.
-				
-			~TextLoad();
-				//Doesn't need to exist
 			
 		//ACCESS FUNCTIONS
 			int getMemoryLineCount();
