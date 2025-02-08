@@ -115,6 +115,6 @@
 			template <typename Chunk>
 			void BinaryPort<Chunk>::printFuck(){
 				std::cout<<"FUCK"<<std::endl;
-				state A = state::SUPPLANT;
+				state A = state::FREE;
 				stateChanger(A);
 			}
