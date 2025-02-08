@@ -22,7 +22,7 @@ template <typename Chunk>
 class BinaryPort{
 	
 		private:
-			//PRIVATE VARIABLES
+			//PRIVATE VARIABLES [Users please ignore these]
 				//Universal fstream Variable
 					std::fstream filer;
 					
@@ -45,13 +45,11 @@ class BinaryPort{
 				
 		public:	
 			// (Setters & Getters)
-				
 				void setFilePath(std::string input);
 				int checkChunkSize();//Returns value in bytes
 				std::string getFilePath();
 				
 			//Analysis Methods
-				
 				std::streampos checkBinFileSize();
 					/*Returns the number of bytes in target Binary file.
 					Might not be needed in all honesty since reading in you can just
@@ -60,6 +58,8 @@ class BinaryPort{
 			//Reading
 				void read(Chunk readReturn);
 					/*Reads the next chunk in the file.
+					This chunks value is then copied to the passed chunk.
+					Note that both the passed chunk and file chunk have to be the same.
 					Each read moves the cursor 1 chunk, allowing for repeated reads 
 					to read the whole file.*/
 			
@@ -74,7 +74,11 @@ class BinaryPort{
 					If the target file does not exist it will be made.
 					Cursor moves with appended writes allowing for repeated writes.*/
 					
-				void printFuck();
+			//Manual File Closeing
+				void fileClose();
+					/*If you close a file when your done, it prevents the OS from freezing
+					its use from other processes and can reduce data loss if the program 
+					closes abbruptly*/
 };
 
 #include "BinaryPort.tpp"

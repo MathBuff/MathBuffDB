@@ -87,7 +87,9 @@
 		template <typename Chunk> //Need to test this
 			std::streampos BinaryPort<Chunk>::checkBinFileSize(){
 			stateChanger(state::FREE);
-			filer.open(filePath, std::ios::binary);
+			stateChanger(state::READ);
+						
+			fileOpenedErrorCheck();
 			
 			filer.seekg(0, std::ios::end); // Move the file cursor to the end
 			std::streampos fileSize = filer.tellg();
@@ -118,9 +120,8 @@
 			filer.write(reinterpret_cast<char*>(&data), sizeof(data));
 		}
 		
-	//Print Text Function
+	//Manual File Closeing
 		template <typename Chunk>
-		void BinaryPort<Chunk>::printFuck(){
-
-			std::cout<<"FUCK"<<std::endl;
+		void BinaryPort<Chunk>::fileClose(){
+			stateChanger(state::FREE);
 		}
