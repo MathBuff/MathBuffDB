@@ -6,9 +6,7 @@ class CPPSocket{
 	
 	public:
 		CPPSocket();
-		
-		
-		
+	
 };
 
 
